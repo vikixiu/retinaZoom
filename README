@@ -1,2 +1,3 @@
 aqqle like retinaZoom
-required DD_roundies and jQuery.mousewheel
+required DD_roundies
+also '<meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">'
