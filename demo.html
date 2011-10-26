@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">
+<title>Apple-like Retina Effect With jQuery &amp; CSS | Tutorialzine demo</title>
+
+<link rel="stylesheet" type="text/css" href="styles.css" />
+
+</head>
+
+<body>
+<!--
+<h1>Apple-like Retina Effect With jQuery</h1>
+<h2><a href="http://tutorialzine.com/2010/06/apple-like-retina-effect-jquery-css/">Read the tutorial on Tutorialzine &raquo;</a></h2>
+-->
+<div id="main">
+
+	<div id="iphone">
+    	<div id="webpage">
+			<img src="img/webpage.png" width="499" height="283" alt="Web Page" />
+        	<div id="retina"></div>
+			<div style="display:none"><img src="img/webpage.png" width="1000"  height="568" alt="zoom" style="width:1000px; height:568px"/></div>
+        </div>
+    </div>
+    
+</div>
+
+<p class="credit"><a href="http://zandog.deviantart.com/art/Apple-iPhone-4G-PSD-161681253">zandog's iPhone 4 PSD was used in the making of this demo</a></p>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery_mousewheel_plugin.js"></script>
+<script type="text/javascript" src="DD_roundies_0.0.2a.js"></script>
+<script type="text/javascript" src="jquery.retina.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#retina').retina('#webpage');
+	});
+	if($.browser.msie){
+		DD_roundies.addRule('#retina', $('#retina').width()/2 + 'px');
+	}
+</script>
+</body>
+</html>
