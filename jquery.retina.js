@@ -92,7 +92,7 @@ jQuery(function($) {
 					intOverallDelta--;
 				}
 				retinaZoom = retina.width() + scale;
-				if(retinaZoom >= 10 && retinaZoom <= sizes.holder.width){
+				if(retinaZoom >= sizes.retina.width*0.5 && retinaZoom <= sizes.retina.width*2){
 					retina.width(retinaZoom).height(retinaZoom).css({
 						left : retina.offset().left - offset.left - scale/2,
 						top : retina.offset().top - offset.top - scale/2
