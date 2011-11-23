@@ -1,6 +1,5 @@
 jQuery(function($) {
 	$.fn.retina = function(holder,options){
-		
 		var retina = $(this),
 			holder = $(holder),
 			left = 0,scaleX = 0,
