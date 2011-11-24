@@ -1,7 +1,6 @@
 jQuery(function($) {
 	$.fn.retina = function(options){
-		var retina = $(this), holder;
-		if(options && options.holder) { holder = $(holder);} else {holder = retina.parent('div')};
+		
 		
 		var controls = {
 			wheel : true,
@@ -14,6 +13,8 @@ jQuery(function($) {
 			if (options) {
 				$.extend (controls, options);
 			}
+			var retina = $(this), holder;
+			if(options && options.holder) { holder = $(holder);} else {holder = retina.parent('div')};
 			
 			var sizes ={
 				retina: { width:retina.width(), height:retina.height() }, 
@@ -46,6 +47,16 @@ jQuery(function($) {
 				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width}
 				
 			}
+			
+			if($.browser.msie){
+				DD_roundies.addRule(this, maxRetina);
+			}
+			
+			// necessary -- DO NOT REMOVE
+			holder.css({
+				paddingLeft:'0px',
+				paddingTop:'0px'
+				});
 			
 			//begin
 			if(navigator.userAgent.indexOf('Chrome')!=-1)
