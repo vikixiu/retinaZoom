@@ -1,12 +1,20 @@
 jQuery(function($) {
-	$.fn.retina = function(holder,options){
+	$.fn.retina = function(options){
 		var retina = $(this), holder;
-		if(holder) { holder = $(holder);} else {holder = retina.parent('div')};
+		if(options && options.holder) { holder = $(holder);} else {holder = retina.parent('div')};
 		
-		
+		var controls = {
+			wheel : true,
+		}
 		
 
 		return this.each(function(){
+		
+			//If options exist, merge them with default settings
+			if (options) {
+				$.extend (controls, options);
+			}
+			
 			var sizes ={
 				retina: { width:retina.width(), height:retina.height() }, 
 				holderOffset : { left: holder.offset().left, top: holder.offset().top },
@@ -17,10 +25,7 @@ jQuery(function($) {
 					x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
 					y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
 					},
-				maxRetina = {
-					width:(sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2,
-					height:0
-				};
+				maxRetina = 0;
 				
 			var retinamovePara = function(event){
 					this.holderleft = event.pageX - sizes.holderOffset.left;
@@ -32,11 +37,14 @@ jQuery(function($) {
 							};
 					
 					return this;
-				}	
+				};
 		
-			//If options exist, merge them with default settings
-			if (options) {
-				$.extend (sizes, options);
+			if(controls.sizelimit){
+				maxRetina = controls.sizelimit;
+			}else{
+				maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
+				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width}
+				
 			}
 			
 			//begin
@@ -86,29 +94,30 @@ jQuery(function($) {
 			
 
 			
-				
-			holder.mousewheel(function(objEvent, intDelta){ 
-				var retinaZoom = 0;
-				var scale = retina.width() * 0.2 * intDelta;
-				
-				retinaZoom = retina.width() + scale;
-				
-				var wheelPara = {
-					left:retina.offset().left - sizes.holderOffset.left - scale/2,
-					top: retina.offset().top - sizes.holderOffset.top - scale/2
-				}
-				
-				if(objEvent.preventDefault){
-					objEvent.preventDefault();}
-				
-				if(retinaZoom >= sizes.retina.width*0.5 && retinaZoom <= maxRetina.width){
-					retina.width(retinaZoom).height(retinaZoom).css({
-						left : wheelPara.left,
-						top : wheelPara.top
-						//backgroundPosition : (Imgscale.x*wheelPara.left*(-1))+'px '+(Imgscale.y*wheelPara.top*(-1))+'px'
-					});
-				}
-			});
+			if(controls.wheel){	
+				holder.mousewheel(function(objEvent, intDelta){ 
+					
+					var scale = retina.width() * 0.2 * intDelta;
+					
+					
+					var wheelPara = {
+						left:retina.offset().left - sizes.holderOffset.left - scale/2,
+						top: retina.offset().top - sizes.holderOffset.top - scale/2,
+						retinaZoom : retina.width() + scale
+					}
+					
+					if(objEvent.preventDefault){
+						objEvent.preventDefault();}
+					
+					if(wheelPara.retinaZoom >= sizes.retina.width*0.5 && wheelPara.retinaZoom <= maxRetina){
+						retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
+							left : wheelPara.left,
+							top : wheelPara.top
+							//backgroundPosition : (Imgscale.x*wheelPara.left*(-1))+'px '+(Imgscale.y*wheelPara.top*(-1))+'px'
+						});
+					}
+				});// end of mousewheel
+			}
 
 		});
 		
