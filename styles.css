@@ -24,8 +24,8 @@ body{
 
 	/* Positioned absolutely, so we can move it around */
 	position:absolute;
-	height:180px;
-	width:180px;
+	height:120px;
+	width:120px;
 
 	/* Hidden by default */
 	display:none;

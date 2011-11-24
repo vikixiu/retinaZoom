@@ -85,14 +85,14 @@ jQuery(function($) {
 					objEvent.preventDefault();}
 					
 				var scale = retina.width() * 0.2 * intDelta;
-			    if (intDelta > 0){
+			    /*if (intDelta > 0){
 				   intOverallDelta++;
 				}
 			    else if (intDelta < 0){
 					intOverallDelta--;
-				}
+				}*/
 				retinaZoom = retina.width() + scale;
-				if(retinaZoom >= sizes.retina.width*0.5 && retinaZoom <= sizes.retina.width*2){
+				if(retinaZoom >= sizes.retina.width*0.5 && retinaZoom <= (imgW-(sizes.holder.width - sizes.retina.width/2)*scaleX)/2){
 					retina.width(retinaZoom).height(retinaZoom).css({
 						left : retina.offset().left - offset.left - scale/2,
 						top : retina.offset().top - offset.top - scale/2
