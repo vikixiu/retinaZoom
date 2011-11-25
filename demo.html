@@ -12,13 +12,36 @@
 
 <body>
 <div id="main">
-
-    	<div id="holder">
+	<div class="retinaContainer">
+		<div class="desc">
+			default
+		</div>
+		<div class="holder">
 			<img src="img/psbe.jpg" width="335" height="188" alt="" />
-        	<div id="retina"></div>
+			<div class="retina" id="retinaDefault"></div>
 			<div style="display:none"><img src="img/psbe.jpg" width="670"  height="376" alt="zoom" style="width:670px; height:376px"/></div>
-        </div>
-    
+		</div>
+	</div>
+	<div class="retinaContainer">
+		<div class="desc">
+			retina zoom when mousewheel
+		</div>
+		<div class="holder">
+			<img src="img/psbe.jpg" width="335" height="188" alt="" />
+			<div class="retina" id="retinaWheel"></div>
+			<div style="display:none"><img src="img/psbe.jpg" width="670"  height="376" alt="zoom" style="width:670px; height:376px"/></div>
+		</div>
+	</div>
+	<div class="retinaContainer">
+		<div class="desc">
+			limit retina size when mousewheel
+		</div>
+		<div class="holder">
+			<img src="img/psbe.jpg" width="335" height="188" alt="" />
+			<div class="retina" id="retinaWheelSize"></div>
+			<div style="display:none"><img src="img/psbe.jpg" width="670"  height="376" alt="zoom" style="width:670px; height:376px"/></div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="jquery_mousewheel_plugin.js"></script>
@@ -26,7 +49,9 @@
 <script type="text/javascript" src="jquery.retina.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#retina').retina({sizelimit:200});
+		$('#retinaDefault').retina({wheel:false});
+		$('#retinaWheel').retina();
+		$('#retinaWheelSize').retina({sizelimit:200});
 	});
 	
 </script>

@@ -11,13 +11,14 @@ body{
 }
 
 
-#holder{
+.holder{
 	/* Contains the webpage screenshot */
-	margin:40px;
+	margin:10px;
+	width:335px;
 	position:relative;
 }
 
-#retina{
+.retina{
 	/* The Retina effect */
 	background:url('img/psbe.jpg') no-repeat center center ;
 	border:2px solid white;
@@ -46,7 +47,7 @@ body{
 	/*behavior: url(ie-css3.htc);*/
 	}
 
-#retina.chrome{
+.retina.chrome{
 	/* A special chrome version of the cursor */
 	cursor:url('img/blank_google_chrome.cur'),default;
 }
@@ -54,13 +55,32 @@ body{
 #main{
 	/* The main div */
 	margin:40px auto;
+	padding:0 20px;
 	position:relative;
-	width:415px;
+	width:800px;
 	background:#eee;
 	border:1px solid #ddd;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+}
+
+.retinaContainer{
+	background:#fff;
+	padding:5px;
+	margin:50px 0;
+	
+	margin:40px 0;
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
+	
+}
+
+.retinaContainer .desc{
+	float:right; display:block;
+	width:400px;
+	margin:10px
 }
 
 /* The styles below are only needed by the demo page */

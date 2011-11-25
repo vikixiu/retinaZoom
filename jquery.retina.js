@@ -44,7 +44,7 @@ jQuery(function($) {
 				maxRetina = controls.sizelimit;
 			}else{
 				maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
-				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width}
+				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5}
 				
 			}
 			
