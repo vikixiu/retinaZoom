@@ -1,8 +1,9 @@
 jQuery(function($) {
 	$.fn.retina = function(options){
-				
+		alert(0);
+		
 		var controls = {
-			wheel : true
+			wheel : true,
 		}
 		
 
@@ -53,7 +54,7 @@ jQuery(function($) {
 			
 			// Add round conners to IE6~8
 			if($.browser.msie){//alert(retina.attr('id'));
-				DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
+				//DD_roundies.addRule('retinaDefault', maxRetina);
 			}
 			
 			// necessary -- DO NOT REMOVE, clear holder's padding
@@ -63,7 +64,7 @@ jQuery(function($) {
 				});
 			
 			//begin
-			holder.bind('mousemove, touchmove',function(e){
+			holder.mousemove(function(e){
 
 				var movePara = new retinamovePara(e); 
 
@@ -93,14 +94,14 @@ jQuery(function($) {
 				});
 				
 				
-			}).bind('mouseleave, touchend',function(){
+			}).mouseleave(function(){
 				retina.stop(true,true).fadeOut('fast');
-			}).bind('mouseenter, touchstart',function(){
+			}).mouseenter(function(){
 				retina.stop(true,true).fadeIn('fast');
 			});
 			
 
-			//Add mousewheel effect
+			//
 			if(controls.wheel){	
 				holder.mousewheel(function(objEvent, intDelta){ 
 					
@@ -124,7 +125,7 @@ jQuery(function($) {
 						});
 					}
 				});// end of mousewheel
-			};
+			}
 
 		});
 		

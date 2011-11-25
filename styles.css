@@ -78,6 +78,10 @@ body{
 	margin:10px
 }
 
+.retinaContainer .desc h2{
+	margin-bottom:10px; color:#333;
+}
+
 /* The styles below are only needed by the demo page */
 
 h1{
