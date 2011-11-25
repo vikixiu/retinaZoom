@@ -47,11 +47,6 @@ body{
 	/*behavior: url(ie-css3.htc);*/
 	}
 
-.retina.chrome{
-	/* A special chrome version of the cursor */
-	cursor:url('img/blank_google_chrome.cur'),default;
-}
-
 #main{
 	/* The main div */
 	margin:40px auto;

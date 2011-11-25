@@ -1,9 +1,8 @@
 jQuery(function($) {
 	$.fn.retina = function(options){
-		
-		
+				
 		var controls = {
-			wheel : true,
+			wheel : true
 		}
 		
 
@@ -13,6 +12,8 @@ jQuery(function($) {
 			if (options) {
 				$.extend (controls, options);
 			}
+			
+			//define retina and holder
 			var retina = $(this), holder;
 			if(options && options.holder) { holder = $(holder);} else {holder = retina.parent('div')};
 			
@@ -27,7 +28,8 @@ jQuery(function($) {
 					y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
 					},
 				maxRetina = 0;
-				
+			
+			// function to Caculate mouseMove Parameters
 			var retinamovePara = function(event){
 					this.holderleft = event.pageX - sizes.holderOffset.left;
 					this.holdertop = event.pageY - sizes.holderOffset.top; 
@@ -39,7 +41,8 @@ jQuery(function($) {
 					
 					return this;
 				};
-		
+				
+			// Setting maximum retina size
 			if(controls.sizelimit){
 				maxRetina = controls.sizelimit;
 			}else{
@@ -48,25 +51,18 @@ jQuery(function($) {
 				
 			}
 			
-			if($.browser.msie){
-				DD_roundies.addRule(this, maxRetina);
+			// Add round conners to IE6~8
+			if($.browser.msie){//alert(retina.attr('id'));
+				DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
 			}
 			
-			// necessary -- DO NOT REMOVE
+			// necessary -- DO NOT REMOVE, clear holder's padding
 			holder.css({
 				paddingLeft:'0px',
 				paddingTop:'0px'
 				});
 			
 			//begin
-			if(navigator.userAgent.indexOf('Chrome')!=-1)
-			{
-				/*	Applying a special chrome curosor,
-					as it fails to render completely blank curosrs. */
-					
-				retina.addClass('chrome');
-			}
-			
 			holder.mousemove(function(e){
 
 				var movePara = new retinamovePara(e); 
@@ -104,7 +100,7 @@ jQuery(function($) {
 			});
 			
 
-			
+			//
 			if(controls.wheel){	
 				holder.mousewheel(function(objEvent, intDelta){ 
 					
@@ -128,7 +124,7 @@ jQuery(function($) {
 						});
 					}
 				});// end of mousewheel
-			}
+			};
 
 		});
 		
