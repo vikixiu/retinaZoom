@@ -1,3 +1,28 @@
+/*
+ * Retina Zoom
+ * Retina zoom is jQuery plugin which offers an Apple like zoom style. It 
+ * works well in both IE and morden broswers, also support IOS devices.
+ * Not only image can zoom, retina also can zoom when mousewheel.
+ *
+ * To make it working, it need 
+ * 1. DD_roundies_0.0.2a.js 
+ * 2. jquery_mousewheel_plugin.js
+ * 3. <meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">
+ * 
+ * After add above three , time to use:
+ * $('#retina').retina();
+ *
+ * retina can take up to 2 arguments, both optional.
+ * {
+ *		wheel: true,		
+ *			//controller of mousewheel event, default value is true
+ *		sizelimit: 100
+ *			//set maximum size to #retina
+ * }
+ *
+ *
+ */
+
 jQuery(function($) {
 	$.fn.retina = function(options){
 				
@@ -15,7 +40,12 @@ jQuery(function($) {
 			
 			//define retina and holder
 			var retina = $(this), holder;
-			if(options && options.holder) { holder = $(holder);} else {holder = retina.parent('div')};
+
+			if(retina.parent('div')){
+				holder = retina.parent('div');
+				}else{
+					return false;
+				}
 			
 			var sizes ={
 				retina: { width:retina.width(), height:retina.height() }, 
@@ -63,7 +93,7 @@ jQuery(function($) {
 				});
 			
 			//begin
-			holder.bind('mousemove, touchmove',function(e){
+			holder.bind('mousemove touchmove',function(e){
 
 				var movePara = new retinamovePara(e); 
 
@@ -93,9 +123,9 @@ jQuery(function($) {
 				});
 				
 				
-			}).bind('mouseleave, touchend',function(){
+			}).bind('mouseleave touchend',function(){
 				retina.stop(true,true).fadeOut('fast');
-			}).bind('mouseenter, touchstart',function(){
+			}).bind('mouseenter touchstart',function(){
 				retina.stop(true,true).fadeIn('fast');
 			});
 			
@@ -120,7 +150,7 @@ jQuery(function($) {
 						retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
 							left : wheelPara.left,
 							top : wheelPara.top
-							//backgroundPosition : (Imgscale.x*wheelPara.left*(-1))+'px '+(Imgscale.y*wheelPara.top*(-1))+'px'
+							//backgroundPosition : (Imgscale.x*(wheelPara.left + scale/2)*(-1))+'px '+(Imgscale.y*(wheelPara.top + scale/2)*(-1))+'px'
 						});
 					}
 				});// end of mousewheel
