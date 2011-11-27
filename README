@@ -1,5 +1,24 @@
-aqqle like retinaZoom
-required 
-1. DD_roundies_0.0.2a.js
-2. '<meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">'
-3. jquery_mousewheel_plugin.js
+/*
+ * Retina Zoom
+ * Retina zoom is jQuery plugin which offers an Apple like zoom style. It 
+ * works well in both IE and morden broswers, also support IOS devices.
+ * Not only image can zoom, retina also can zoom when mousewheel.
+ *
+ * To make it working, needs
+ * 1. DD_roundies_0.0.2a.js 
+ * 2. jquery_mousewheel_plugin.js
+ * 3. <meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">
+ * 
+ * After add above three , it can be easily used like this:
+ * $('#retina').retina();
+ *
+ * retina can take up to 2 arguments, both optional.
+ * {
+ *		wheel: true,		
+ *			//controller of mousewheel event, default value is true
+ *		sizelimit: 100
+ *			//set maximum size to #retina
+ * }
+ *
+ *
+ */
