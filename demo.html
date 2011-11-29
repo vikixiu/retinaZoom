@@ -6,8 +6,6 @@
 <meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Retina Zoom</title>
-
-
 <link rel="stylesheet" type="text/css" href="hl/style.css" />
 <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
@@ -27,9 +25,7 @@
 			<p>2. Put the origin image before '#retina' and hidden zoom image after it. Then wrap those three with a 'div'.</p>
 				<pre name="code" class="html">&lt;div class="holder"&gt;
 	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" /&gt;
-	&lt;div class="retina" id="retinaDefault"&gt;&lt;/div&gt;
-	&lt;img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" style="width:1200px; 
-	height:674px;display:none"/&gt;
+	&lt;div class="retina" &gt;&lt;/div&gt;
 &lt;/div&gt;
 				</pre>
 			<p>3. Include JS files</p>
@@ -71,8 +67,7 @@
 	-webkit-border-radius:200px;
 	border-radius:200px;
 	
-	/* Set zoom image as its background */
-	background:url('img/psbe.jpg') no-repeat center center ;
+	background-repeat:no-repeat;
 	}
 				</pre>
 			</dd>
@@ -84,9 +79,8 @@
 						<pre name="code" class="js">$('#retinaDefault').retina();</pre>
 					</div>
 					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674" />
 						<div class="retina" id="retinaDefault"></div>
-						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
 					</div>
 				</div>
 				<div class="retinaContainer">
@@ -95,9 +89,8 @@
 						<pre name="code" class="js">$('.retina').retina({wheel:false});</pre>
 					</div>
 					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674"/>
 						<div class="retina" id="retinaWheel"></div>
-						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
 					</div>
 				</div>
 				<div class="retinaContainer">
@@ -106,13 +99,13 @@
 						<pre name="code" class="js">$('.retina').retina({sizelimit:{max:200,min:80}})</pre>
 					</div>
 					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674"/>
 						<div class="retina" id="retinaWheelSize"></div>
-						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
 					</div>
 				</div>
 			</dd>
 		</dl>
+		<h2>Gallery</h2>
 	</div>
 	
 </div>

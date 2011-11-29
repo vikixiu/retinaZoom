@@ -20,7 +20,7 @@ body{
 
 .retina{
 	/* The Retina effect */
-	background:url('img/psbe.jpg') no-repeat center center ;
+	background-repeat: no-repeat ;
 	border:2px solid white;
 
 	/* Positioned absolutely, so we can move it around */
@@ -44,7 +44,6 @@ body{
 	-webkit-border-radius:200px;
 	border-radius:200px;
 	
-	/*behavior: url(ie-css3.htc);*/
 	}
 
 #main{

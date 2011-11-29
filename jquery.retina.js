@@ -16,8 +16,8 @@
  * {
  *		wheel: true,		
  *			//controller of mousewheel event, default value is true
- *		sizelimit: 100
- *			//set maximum size to #retina
+ *		sizelimit: {max:200,min:50}
+ *			//set max/min size to #retina
  * }
  *
  *
@@ -38,76 +38,88 @@ jQuery(function($) {
 				$.extend (controls, options);
 			}
 			
-			//Init
-			var retina = $(this), holder, oImg, zImg;
+			try {
+				//Init
+				var retina = $(this), holder, oImg, zImg;
 
-			if(retina.parent('div')){
-				holder = retina.parent('div');
-				}else{
-					return false;
-				}
-			if(retina.next('div')){
-				zImg = retina.next('div');
-				}else{
-					return false;
-				}
-			if(holder.children('img')){
-				oImg = holder.children('img');
-				}else{
-					return false;
-				}
+				if(retina.parent('div')){
+					holder = retina.parent('div');
+					}else{
+						return false;
+					}
+				/*if(retina.next('div')){
+					zImg = retina.next('div');
+					}else{
+						return false;
+					}*/
+				if(holder.children('img')){
+					oImg = holder.children('img');
+					}else{
+						return false;
+					}
+				var zImg = oImg.attr('longdesc').split('|');	
 				
-			var sizes ={
-				retina: { width:retina.width(), height:retina.height() }, 
-				holderOffset : { left: holder.offset().left, top: holder.offset().top },
-				oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
-				zImg:{width:zImg.width(),height:zImg.height()}// zoom image size
-				},
-				Imgscale = {
-					x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
-					y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
-					},
-				maxRetina = 0,
-				minRetina = 0;
-			
-			// function to Caculate mouseMove Parameters
-			var retinamovePara = function(event){
-					this.holderleft = event.pageX - sizes.holderOffset.left;
-					this.holdertop = event.pageY - sizes.holderOffset.top; 
-					this.css = {
-								left: this.holderleft - retina.width()/2,
-								top: this.holdertop - retina.height()/2,
-								backgroundPosition : (Imgscale.x*this.holderleft*(-1))+'px '+(Imgscale.y*this.holdertop*(-1))+'px'
-							};
+				console.log(zImg);
+				//retina background-image
+				retina.css('background-image', 'url(' + zImg[0] + ')');
 					
-					return this;
-				};
+				var sizes ={
+					retina: { width:retina.width(), height:retina.height() }, 
+					holderOffset : { left: holder.offset().left, top: holder.offset().top },
+					oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
+					zImg:{width:zImg[1]-0,height:zImg[2]-0}// zoom image size
+					},
+					Imgscale = {
+						x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
+						y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
+						},
+					maxRetina = 0,
+					minRetina = 0;
 				
-			// Setting maximum retina size
-			maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
-				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
+				
+					
+				// Setting maximum retina size
+				maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
+					if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
 				minRetina = sizes.retina.width*0.5;
 
-			if(controls.sizelimit){
-				if(controls.sizelimit.max){
-					maxRetina = controls.sizelimit.max;
-					}
-				if(controls.sizelimit.min){
-					minRetina = controls.sizelimit.min;
-					}
-			}		
+				if(controls.sizelimit){
+					if(controls.sizelimit.max){
+						maxRetina = controls.sizelimit.max;
+						}
+					if(controls.sizelimit.min){
+						minRetina = controls.sizelimit.min;
+						}
+				}		
 
-			
-			// Add round conners to IE6~8
-			if($.browser.msie){//alert(retina.attr('id'));
-				DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
+				
+				// Add round conners to IE6~8
+				if($.browser.msie){//alert(retina.attr('id'));
+					DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
+				}
+				
+				// necessary -- DO NOT REMOVE, clear holder's padding
+				holder.css({
+					paddingLeft:'0px',
+					paddingTop:'0px'
+					});
 			}
+			catch (error) {
+				console.log(error);
+			}		
 			
-			// necessary -- DO NOT REMOVE, clear holder's padding
-			holder.css({
-				paddingLeft:'0px',
-				paddingTop:'0px'
-				});
+			// function to Caculate mouseMove Parameters
+				var retinamovePara = function(event){
+						this.holderleft = event.pageX - sizes.holderOffset.left;
+						this.holdertop = event.pageY - sizes.holderOffset.top; 
+						this.css = {
+									left: this.holderleft - retina.width()/2,
+									top: this.holdertop - retina.height()/2,
+									backgroundPosition : (Imgscale.x*this.holderleft*(-1))+'px '+(Imgscale.y*this.holdertop*(-1))+'px'
+								};
+						
+						return this;
+					};
 			
 			//begin
 			holder.bind('mousemove touchmove',function(e){
