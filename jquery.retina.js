@@ -41,25 +41,12 @@ jQuery(function($) {
 			try {
 				//Init
 				var retina = $(this), holder, oImg, zImg;
-
-				if(retina.parent('div')){
-					holder = retina.parent('div');
-					}else{
-						return false;
-					}
-				/*if(retina.next('div')){
-					zImg = retina.next('div');
-					}else{
-						return false;
-					}*/
-				if(holder.children('img')){
-					oImg = holder.children('img');
-					}else{
-						return false;
-					}
-				var zImg = oImg.attr('longdesc').split('|');	
 				
-				console.log(zImg);
+				holder = retina.parent('div');
+				oImg = retina.prev('img');
+
+				zImg = oImg.attr('longdesc').split('|');	
+				
 				//retina background-image
 				retina.css('background-image', 'url(' + zImg[0] + ')');
 					
