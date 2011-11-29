@@ -24,155 +24,173 @@
  */
 
 jQuery(function($) {
-	$.fn.retina = function(options){
-				
-		var controls = {
-			wheel : true
-		}
-		
 
-		return this.each(function(){
-		
-			//If options exist, merge them with default settings
-			if (options) {
-				$.extend (controls, options);
-			}
-			
-			try {
-				//Init
-				var retina = $(this), holder, oImg, zImg;
-				
-				holder = retina.parent('div');
-				oImg = retina.prev('img');
-
-				zImg = oImg.attr('longdesc').split('|');	
-				
-				//retina background-image
-				retina.css('background-image', 'url(' + zImg[0] + ')');
-					
-				var sizes ={
-					retina: { width:retina.width(), height:retina.height() }, 
-					holderOffset : { left: holder.offset().left, top: holder.offset().top },
-					oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
-					zImg:{width:zImg[1]-0,height:zImg[2]-0}// zoom image size
-					},
-					Imgscale = {
-						x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
-						y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
-						},
-					maxRetina = 0,
-					minRetina = 0;
-				
-				
-					
-				// Setting maximum retina size
-				maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
-					if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
-				minRetina = sizes.retina.width*0.5;
-
-				if(controls.sizelimit){
-					if(controls.sizelimit.max){
-						maxRetina = controls.sizelimit.max;
-						}
-					if(controls.sizelimit.min){
-						minRetina = controls.sizelimit.min;
-						}
-				}		
-
-				
-				// Add round conners to IE6~8
-				if($.browser.msie){//alert(retina.attr('id'));
-					DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
+	var methods = {
+			retinaOnly : function (options) {
+				var controls = {
+					wheel : true
 				}
 				
-				// necessary -- DO NOT REMOVE, clear holder's padding
-				holder.css({
-					paddingLeft:'0px',
-					paddingTop:'0px'
-					});
-			}
-			catch (error) {
-				console.log(error);
-			}		
-			
-			// function to Caculate mouseMove Parameters
-				var retinamovePara = function(event){
-						this.holderleft = event.pageX - sizes.holderOffset.left;
-						this.holdertop = event.pageY - sizes.holderOffset.top; 
-						this.css = {
-									left: this.holderleft - retina.width()/2,
-									top: this.holdertop - retina.height()/2,
-									backgroundPosition : (Imgscale.x*this.holderleft*(-1))+'px '+(Imgscale.y*this.holdertop*(-1))+'px'
-								};
+
+				return this.each(function(){
+				
+					//If options exist, merge them with default settings
+					if (options) {
+						$.extend (controls, options);
+					}
+					
+					try {
+						//Init
+						var retina = $(this), holder, oImg, zImg;
 						
-						return this;
-					};
-			
-			//begin
-			holder.bind('mousemove touchmove',function(e){
+						holder = retina.parent('div');
+						oImg = holder.children('img:eq(0)');
 
-				var movePara = new retinamovePara(e); 
+						zImg = oImg.attr('longdesc').split('|');	
+						
+						//retina background-image
+						retina.css('background-image', 'url(' + zImg[0] + ')');
+							
+						var sizes ={
+							retina: { width:retina.width(), height:retina.height() }, 
+							holderOffset : { left: holder.offset().left, top: holder.offset().top },
+							oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
+							zImg:{width:zImg[1]-0,height:zImg[2]-0}// zoom image size
+							},
+							Imgscale = {
+								x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
+								y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
+								},
+							maxRetina = 0,
+							minRetina = 0;
+						
+						
+							
+						// Setting maximum retina size
+						maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
+							if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
+						minRetina = sizes.retina.width*0.5;
 
-				if(retina.is(':not(:animated):hidden')){
-					/* Fixes a bug where the retina div is not shown */
-					holder.trigger('mouseenter');
-				}
+						if(controls.sizelimit){
+							if(controls.sizelimit.max){
+								maxRetina = controls.sizelimit.max;
+								}
+							if(controls.sizelimit.min){
+								minRetina = controls.sizelimit.min;
+								}
+						}		
 
-				if(movePara.holderleft<0 || movePara.holdertop<0 || movePara.holderleft > sizes.oImg.width || movePara.holdertop > sizes.oImg.height)
-				{
-					/*	If we are out of the bondaries of the
-						holder screenshot, hide the retina div */
-
-					if(!retina.is(':animated')){
-						holder.trigger('mouseleave');
+						
+						// Add round conners to IE6~8
+						if($.browser.msie){//alert(retina.attr('id'));
+							DD_roundies.addRule('#' + retina.attr('id'), maxRetina + 'px');
+						}
+						
+						// necessary -- DO NOT REMOVE, clear holder's padding
+						holder.css({
+							paddingLeft:'0px',
+							paddingTop:'0px'
+							});
 					}
-					return false;
-				}
+					catch (error) {
+						console.log(error);
+					}		
+					
+					// function to Caculate mouseMove Parameters
+						var retinamovePara = function(event){
+								this.holderleft = event.pageX - sizes.holderOffset.left;
+								this.holdertop = event.pageY - sizes.holderOffset.top; 
+								this.css = {
+											left: this.holderleft - retina.width()/2,
+											top: this.holdertop - retina.height()/2,
+											backgroundPosition : (Imgscale.x*this.holderleft*(-1))+'px '+(Imgscale.y*this.holdertop*(-1))+'px'
+										};
+								
+								return this;
+							};
+					
+					//begin
+					holder.bind('mousemove touchmove',function(e){
 
-				/*	Moving the retina div with the mouse
-					(and scrolling the background) */
-				
-				retina.css({
-					left				: movePara.css.left,
-					top					: movePara.css.top,
-					backgroundPosition	: movePara.css.backgroundPosition
-				});
-				
-				
-			}).bind('mouseleave touchend',function(){
-				retina.stop(true,true).fadeOut('fast');
-			}).bind('mouseenter touchstart',function(){
-				retina.stop(true,true).fadeIn('fast');
-			});
-			
+						var movePara = new retinamovePara(e); 
 
-			//Add mousewheel effect
-			if(controls.wheel){	
-				holder.mousewheel(function(objEvent, intDelta){ 
-					
-					var scale = retina.width() * 0.2 * intDelta;
-					
-					
-					var wheelPara = {
-						left:retina.offset().left - sizes.holderOffset.left - scale/2,
-						top: retina.offset().top - sizes.holderOffset.top - scale/2,
-						retinaZoom : retina.width() + scale
-					}
-					
-					if(objEvent.preventDefault){
-						objEvent.preventDefault();}
-					
-					if(wheelPara.retinaZoom >= minRetina && wheelPara.retinaZoom <= maxRetina){
-						retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
-							left : wheelPara.left,
-							top : wheelPara.top
-							//backgroundPosition : (Imgscale.x*(wheelPara.left + scale/2)*(-1))+'px '+(Imgscale.y*(wheelPara.top + scale/2)*(-1))+'px'
+						if(retina.is(':not(:animated):hidden')){
+							/* Fixes a bug where the retina div is not shown */
+							holder.trigger('mouseenter');
+						}
+
+						if(movePara.holderleft<0 || movePara.holdertop<0 || movePara.holderleft > sizes.oImg.width || movePara.holdertop > sizes.oImg.height)
+						{
+							/*	If we are out of the bondaries of the
+								holder screenshot, hide the retina div */
+
+							if(!retina.is(':animated')){
+								holder.trigger('mouseleave');
+							}
+							return false;
+						}
+
+						/*	Moving the retina div with the mouse
+							(and scrolling the background) */
+						
+						retina.css({
+							left				: movePara.css.left,
+							top					: movePara.css.top,
+							backgroundPosition	: movePara.css.backgroundPosition
 						});
-					}
-				});// end of mousewheel
-			};
+						
+						
+					}).bind('mouseleave touchend',function(){
+						retina.stop(true,true).fadeOut('fast');
+					}).bind('mouseenter touchstart',function(){
+						retina.stop(true,true).fadeIn('fast');
+					});
+					
 
-		});
+					//Add mousewheel effect
+					if(controls.wheel){	
+						holder.mousewheel(function(objEvent, intDelta){ 
+							
+							var scale = retina.width() * 0.2 * intDelta;
+							
+							
+							var wheelPara = {
+								left:retina.offset().left - sizes.holderOffset.left - scale/2,
+								top: retina.offset().top - sizes.holderOffset.top - scale/2,
+								retinaZoom : retina.width() + scale
+							}
+							
+							if(objEvent.preventDefault){
+								objEvent.preventDefault();}
+							
+							if(wheelPara.retinaZoom >= minRetina && wheelPara.retinaZoom <= maxRetina){
+								retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
+									left : wheelPara.left,
+									top : wheelPara.top
+									//backgroundPosition : (Imgscale.x*(wheelPara.left + scale/2)*(-1))+'px '+(Imgscale.y*(wheelPara.top + scale/2)*(-1))+'px'
+								});
+							}
+						});// end of mousewheel
+					};
+
+				});
+			},
+			gallery : function (){
+				console.log('test');
+			}
+		};
+		
+	$.fn.retina = function(method){
+		
+		if ( methods[method] ) {
+		  return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+		  return methods.retinaOnly.apply( this, arguments );
+		} else {
+		  $.error( 'Method ' +  method + ' does not exist' );
+		}  
+				
+		
 		
 	}
 })

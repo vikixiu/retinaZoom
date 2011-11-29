@@ -25,7 +25,9 @@
 			<p>2. Put the origin image before '#retina' and hidden zoom image after it. Then wrap those three with a 'div'.</p>
 				<pre name="code" class="html">&lt;div class="holder"&gt;
 	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" /&gt;
-	&lt;div class="retina" &gt;&lt;/div&gt;
+	&lt;div class="retina" id="retinaDefault"&gt;&lt;/div&gt;
+	&lt;img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" style="width:1200px; 
+	height:674px;display:none"/&gt;
 &lt;/div&gt;
 				</pre>
 			<p>3. Include JS files</p>
@@ -67,40 +69,21 @@
 	-webkit-border-radius:200px;
 	border-radius:200px;
 	
-	background-repeat:no-repeat;
+	/* Set zoom image as its background */
+	background:url('img/psbe.jpg') no-repeat center center ;
 	}
 				</pre>
 			</dd>
 			<dt>Demo</dt>
 			<dd>
 				<div class="retinaContainer">
-					<div class="desc">
-						<p>default</p>
-						<pre name="code" class="js">$('#retinaDefault').retina();</pre>
-					</div>
-					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674" />
-						<div class="retina" id="retinaDefault"></div>
-					</div>
-				</div>
-				<div class="retinaContainer">
-					<div class="desc">
-						<p>Stop retina zoom</p>
-						<pre name="code" class="js">$('.retina').retina({wheel:false});</pre>
-					</div>
-					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674"/>
-						<div class="retina" id="retinaWheel"></div>
-					</div>
-				</div>
-				<div class="retinaContainer">
-					<div class="desc">
-						<p>Limit retina size</p>
-						<pre name="code" class="js">$('.retina').retina({sizelimit:{max:200,min:80}})</pre>
-					</div>
-					<div class="holder">
-						<img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674"/>
-						<div class="retina" id="retinaWheelSize"></div>
+					<h2>Gallery</h2>
+					<div class="retinaContainer">
+						<div class="imgGallery">
+							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
+							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
+							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
+						</div>
 					</div>
 				</div>
 			</dd>
@@ -112,7 +95,7 @@
 <script type="text/javascript" src="jquery_mousewheel_plugin.js"></script>
 <script type="text/javascript" src="hl/hl-all.js"></script>
 <script type="text/javascript" src="DD_roundies_0.0.2a.js"></script>
-<script type="text/javascript" src="jquery.retina.js"></script>
+<script type="text/javascript" src="jquery.retinaGallery.js"></script>
 <script type="text/javascript">
 	DlHighlight.HELPERS.highlightByName("code", "pre")
 	$(document).ready(function(){
