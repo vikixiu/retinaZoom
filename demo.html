@@ -3,66 +3,130 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible">
+<meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Retina Zoom</title>
 
-<link rel="stylesheet" type="text/css" href="styles.css" />
 
+<link rel="stylesheet" type="text/css" href="hl/style.css" />
+<link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
 <body>
-<!--
-<div id="header">
-	Retina zoom is jQuery plugin which offers an Apple like zoom style.  
-</div>
--->
 <div id="main">
-	<div class="retinaContainer">
-		<div class="desc">
-			<h2>default</h2>
-			<p>$('#retinaDefault').retina({wheel:false});</p>
-		</div>
-		<div class="holder">
-			<img src="img/psbe.jpg" width="335" height="188" alt="" />
-			<div class="retina" id="retinaDefault"></div>
-			<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" style="width:1200px; height:674px"/></div>
-		</div>
-	</div>
+	<div id="specification">
+		<h2>Overview</h2>
+		<p>Retina zoom is jQuery plugin which offers an Apple like zoom style. 
+		<br/>It comes from <a href="http://tutorialzine.com/2010/06/apple-like-retina-effect-jquery-css/">Apple-like Retina Effect With jQuery.</a>. But now is much more easily to use, and works well both in IE and morden broswers.</p>
+		<h2>How to use</h2>
+		<dl>
+			<dt>HTML Parts: </dt>
+			<dd><p>1. Add below right after the &lt;head&gt; tag, let IE8 Display in IE7 Standards mode.</p>
+			<pre name="code" class="html">&lt;meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible" /&gt;
+			</pre>
+			<p>2. Put the origin image before '#retina' and hidden zoom image after it. Then wrap those three with a 'div'.</p>
+				<pre name="code" class="html">&lt;div class="holder"&gt;
+	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" /&gt;
+	&lt;div class="retina" id="retinaDefault"&gt;&lt;/div&gt;
+	&lt;img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" style="width:1200px; 
+	height:674px;display:none"/&gt;
+&lt;/div&gt;
+				</pre>
+			<p>3. Include JS files</p>
+			<pre name="code" class="html">&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"&gt;
+&lt;/script&gt;
+&lt;script type="text/javascript" src="jquery_mousewheel_plugin.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="DD_roundies_0.0.2a.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="jquery.retina.js"&gt;&lt;/script&gt;</pre>	
+			</dd>
+			<dt>CSS Parts</dt>
+			<dd>
+				<pre name="code" class="css">
+.holder{
+	position:relative;
+}
+
+.retina{
+	/* The Retina effect */
+	border:2px solid white;
+
+	/* Positioned absolutely, so we can move it around */
+	position:absolute;
+	height:120px;
+	width:120px;
+
+	/* Hidden by default */
+	display:none;
+
+	/* A blank cursor, notice the default fallback */
+	cursor:crosshair;
 	
-	<div class="retinaContainer">
-		<div class="desc">
-			<h2>retina zoom when mousewheel</h2>
-			<p>$('#retinaWheel').retina();</p>
-		</div>
-		<div class="holder">
-			<img src="img/psbe.jpg" width="335" height="188" alt="" />
-			<div class="retina" id="retinaWheel"></div>
-			<div style="display:none"><img src="img/psbe.jpg" width="670"  height="376" alt="zoom" style="width:670px; height:376px"/></div>
-		</div>
-	</div>
-	<div class="retinaContainer">
-		<div class="desc">
-			<h2>limit retina size when mousewheel</h2>
-			<p>$('#retinaWheelSize').retina({sizelimit:200});</p>
-		</div>
-		<div class="holder">
-			<img src="img/psbe.jpg" width="335" height="188" alt="" />
-			<div class="retina" id="retinaWheelSize"></div>
-			<div style="display:none"><img src="img/psbe.jpg" width="670"  height="376" alt="zoom" style="width:670px; height:376px"/></div>
-		</div>
+	/* CSS3 Box Shadow */
+	-moz-box-shadow:0 0 5px #777, 0 0 10px #aaa inset;
+	-webkit-box-shadow:0 0 5px #777;
+	box-shadow:0 0 5px #777, 0 0 10px #aaa inset;
+	
+	/* CSS3 rounded corners */
+	-moz-border-radius:200px;
+	-webkit-border-radius:200px;
+	border-radius:200px;
+	
+	/* Set zoom image as its background */
+	background:url('img/psbe.jpg') no-repeat center center ;
+	}
+				</pre>
+			</dd>
+			<dt>Demo</dt>
+			<dd>
+				<div class="retinaContainer">
+					<div class="desc">
+						<p>default</p>
+						<pre name="code" class="js">$('#retinaDefault').retina();</pre>
+					</div>
+					<div class="holder">
+						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<div class="retina" id="retinaDefault"></div>
+						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
+					</div>
+				</div>
+				<div class="retinaContainer">
+					<div class="desc">
+						<p>Stop retina zoom</p>
+						<pre name="code" class="js">$('.retina').retina({wheel:false});</pre>
+					</div>
+					<div class="holder">
+						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<div class="retina" id="retinaWheel"></div>
+						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
+					</div>
+				</div>
+				<div class="retinaContainer">
+					<div class="desc">
+						<p>Limit retina size</p>
+						<pre name="code" class="js">$('.retina').retina({sizelimit:{max:200,min:80}})</pre>
+					</div>
+					<div class="holder">
+						<img src="img/psbe.jpg" width="335" height="188" alt="" />
+						<div class="retina" id="retinaWheelSize"></div>
+						<div style="display:none"><img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" /></div>
+					</div>
+				</div>
+			</dd>
+		</dl>
 	</div>
 	
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="jquery_mousewheel_plugin.js"></script>
+<script type="text/javascript" src="hl/hl-all.js"></script>
 <script type="text/javascript" src="DD_roundies_0.0.2a.js"></script>
 <script type="text/javascript" src="jquery.retina.js"></script>
 <script type="text/javascript">
+	DlHighlight.HELPERS.highlightByName("code", "pre")
 	$(document).ready(function(){
-		$('#retinaDefault').retina({wheel:false});
-		$('#retinaWheel').retina();
-		$('#retinaWheelSize').retina({sizelimit:200});
+		$('#retinaDefault').retina();
+		$('#retinaWheel').retina({wheel:false});
+		$('#retinaWheelSize').retina({sizelimit:{max:200,min:80}});
 		
 	});
 	
