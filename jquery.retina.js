@@ -38,26 +38,37 @@ jQuery(function($) {
 				$.extend (controls, options);
 			}
 			
-			//define retina and holder
-			var retina = $(this), holder;
+			//Init
+			var retina = $(this), holder, oImg, zImg;
 
 			if(retina.parent('div')){
 				holder = retina.parent('div');
 				}else{
 					return false;
 				}
-			
+			if(retina.next('div')){
+				zImg = retina.next('div');
+				}else{
+					return false;
+				}
+			if(holder.children('img')){
+				oImg = holder.children('img');
+				}else{
+					return false;
+				}
+				
 			var sizes ={
 				retina: { width:retina.width(), height:retina.height() }, 
 				holderOffset : { left: holder.offset().left, top: holder.offset().top },
-				oImg:{ width:holder.children('img').width(), height:holder.children('img').height()},// origin image size
-				zImg:{width:retina.next('div').width(),height:retina.next('div').height()}// zoom image size
+				oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
+				zImg:{width:zImg.width(),height:zImg.height()}// zoom image size
 				},
 				Imgscale = {
 					x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
 					y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
 					},
-				maxRetina = 0;
+				maxRetina = 0,
+				minRetina = 0;
 			
 			// function to Caculate mouseMove Parameters
 			var retinamovePara = function(event){
@@ -73,13 +84,19 @@ jQuery(function($) {
 				};
 				
 			// Setting maximum retina size
+			maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
+				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
+				minRetina = sizes.retina.width*0.5;
+
 			if(controls.sizelimit){
-				maxRetina = controls.sizelimit;
-			}else{
-				maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
-				if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5}
-				
-			}
+				if(controls.sizelimit.max){
+					maxRetina = controls.sizelimit.max;
+					}
+				if(controls.sizelimit.min){
+					minRetina = controls.sizelimit.min;
+					}
+			}		
+
 			
 			// Add round conners to IE6~8
 			if($.browser.msie){//alert(retina.attr('id'));
@@ -146,7 +163,7 @@ jQuery(function($) {
 					if(objEvent.preventDefault){
 						objEvent.preventDefault();}
 					
-					if(wheelPara.retinaZoom >= sizes.retina.width*0.5 && wheelPara.retinaZoom <= maxRetina){
+					if(wheelPara.retinaZoom >= minRetina && wheelPara.retinaZoom <= maxRetina){
 						retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
 							left : wheelPara.left,
 							top : wheelPara.top
