@@ -88,14 +88,23 @@
 						<p>Gallery Default</p>
 						<pre name="code" class="js">$('.imgGallery').retina('gallery');</pre>
 					</div>
-					<div class="imgGallery">
-						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
-						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
-						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+					<div>
+						<div class="imgGallery">
+							<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+							<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+							<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+						</div>
 					</div>
 				</div>
 			</dd>
 		</dl>
+		<h2>Other benifits</h2>
+			<p>Want to insert big image before navigation?
+				<pre name="code" class="js">$('.imgGallery').retina('gallery',{position:0});</pre>
+			</p>
+			<p>Want to give any parameters to retina?
+				<pre name="code" class="js">$('.imgGallery').retina('gallery',{wheel:false});</pre>
+			</p>
 	</div>
 	
 </div>
@@ -107,7 +116,7 @@
 <script type="text/javascript">
 	DlHighlight.HELPERS.highlightByName("code", "pre")
 	$(document).ready(function(){
-		$('.imgGallery').retina('gallery');
+		$('.imgGallery').retina('gallery',{wheel:false});
 		//$('#retinaWheel').retina({wheel:false});
 		//$('#retinaWheelSize').retina({sizelimit:{max:200,min:80}});
 		

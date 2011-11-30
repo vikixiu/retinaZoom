@@ -50,9 +50,8 @@ jQuery(function($) {
 			var controls = {
 				wheel : true
 			}
-			console.log('a');
+			
 			return this.each(function(){
-			console.log('b');
 				//If options exist, merge them with default settings
 				if (options) {
 					$.extend (controls, options);
@@ -196,6 +195,8 @@ jQuery(function($) {
 		},
 		gallery : function (){
 		
+			var galleryPara = arguments[0]; 
+		
 			var retinaOn = function($img){
 				try{
 					var imgInfo = $img.attr('longdesc').split('+'),
@@ -213,14 +214,19 @@ jQuery(function($) {
 				}
 			};
 			
-			// Append retina Divs
-			this.parent('div').append('<div class="retinaHolder holder"><img alt /><div class="retina"></div>');
+			// Append retina Divs 
+			
+			if (galleryPara.position == 0) {
+				this.parent('div').prepend('<div class="retinaHolder holder"><img alt /><div class="retina"></div>');
+			}else{
+				this.parent('div').append('<div class="retinaHolder holder"><img alt /><div class="retina"></div>');
+				}
 			
 			retinaOn(this.children('img:eq(0)'));
 			
 			// Bind retina event
-			if(arguments){ 
-				methods.retinaOnly.apply($('.retina'),Array.prototype.slice.call( arguments, 0 ));
+			if(arguments){ //console.log(Array.prototype.slice.call( arguments, 1 ));
+				methods.retinaOnly.apply($('.retina'),Array.prototype.slice.call( arguments, 1 ));
 			}else{
 				methods.retinaOnly.apply($('.retina'));
 			}
