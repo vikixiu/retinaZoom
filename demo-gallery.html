@@ -13,21 +13,20 @@
 <body>
 <div id="main">
 	<div id="specification">
-		<h2>Overview</h2>
+		<!--<h2>Overview</h2>
 		<p>Retina zoom is jQuery plugin which offers an Apple like zoom style. 
-		<br/>It comes from <a href="http://tutorialzine.com/2010/06/apple-like-retina-effect-jquery-css/">Apple-like Retina Effect With jQuery.</a>. But now is much more easily to use, and works well both in IE and morden broswers.</p>
+		<br/>It comes from <a href="http://tutorialzine.com/2010/06/apple-like-retina-effect-jquery-css/">Apple-like Retina Effect With jQuery.</a>. But now is much more easily to use, and works well both in IE and morden broswers.</p>-->
 		<h2>How to use</h2>
 		<dl>
 			<dt>HTML Parts: </dt>
 			<dd><p>1. Add below right after the &lt;head&gt; tag, let IE8 Display in IE7 Standards mode.</p>
 			<pre name="code" class="html">&lt;meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible" /&gt;
 			</pre>
-			<p>2. Put the origin image before '#retina' and hidden zoom image after it. Then wrap those three with a 'div'.</p>
-				<pre name="code" class="html">&lt;div class="holder"&gt;
-	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" /&gt;
-	&lt;div class="retina" id="retinaDefault"&gt;&lt;/div&gt;
-	&lt;img src="img/psbe.jpg" width="1200"  height="674" alt="zoom" style="width:1200px; 
-	height:674px;display:none"/&gt;
+			<p>2. Wrapped your navigation images with a DIV, retina zoom will create big images itself. To ensure the creation success, take note of the 'longdesc' attribute, it must be defined as <em>"originImageUrl|originImageWidth|originImageheight+zoomImageUrl|zoomImageWidth|zoomImageheight"</em></p>
+				<pre name="code" class="html">&lt;div class="imgGallery"&gt;
+	&lt;img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|335|188+img/psbe.jpg|1200|674"/&gt;
+	&lt;img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|335|188+img/psbe.jpg|1200|674"/&gt;
+	&lt;img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|335|188+img/psbe.jpg|1200|674"/&gt;
 &lt;/div&gt;
 				</pre>
 			<p>3. Include JS files</p>
@@ -72,18 +71,27 @@
 	/* Set zoom image as its background */
 	background:url('img/psbe.jpg') no-repeat center center ;
 	}
+	
+.imgGallery img{
+	opacity:0.6; 
+	cursor:pointer;
+	}
+.imgGallery .retinaOn{
+	opacity:1
+	}	
 				</pre>
 			</dd>
 			<dt>Demo</dt>
 			<dd>
 				<div class="retinaContainer">
-					<h2>Gallery</h2>
-					<div class="retinaContainer">
-						<div class="imgGallery">
-							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
-							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
-							<img src="img/psbe.jpg" width="168" height="94" alt="" longdesc="img/psbe.jpg|1200|674"/>
-						</div>
+					<div class="galleryDesc">
+						<p>Gallery Default</p>
+						<pre name="code" class="js">$('.imgGallery').retina('gallery');</pre>
+					</div>
+					<div class="imgGallery">
+						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
+						<img src="img/psbe.jpg" width="84" height="47" alt="" longdesc="img/psbe.jpg|670|376+img/psbe.jpg|1200|674"/>
 					</div>
 				</div>
 			</dd>
@@ -95,13 +103,13 @@
 <script type="text/javascript" src="jquery_mousewheel_plugin.js"></script>
 <script type="text/javascript" src="hl/hl-all.js"></script>
 <script type="text/javascript" src="DD_roundies_0.0.2a.js"></script>
-<script type="text/javascript" src="jquery.retinaGallery.js"></script>
+<script type="text/javascript" src="jquery.retina.js"></script>
 <script type="text/javascript">
 	DlHighlight.HELPERS.highlightByName("code", "pre")
 	$(document).ready(function(){
-		$('#retinaDefault').retina();
-		$('#retinaWheel').retina({wheel:false});
-		$('#retinaWheelSize').retina({sizelimit:{max:200,min:80}});
+		$('.imgGallery').retina('gallery');
+		//$('#retinaWheel').retina({wheel:false});
+		//$('#retinaWheelSize').retina({sizelimit:{max:200,min:80}});
 		
 	});
 	

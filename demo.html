@@ -22,9 +22,9 @@
 			<dd><p>1. Add below right after the &lt;head&gt; tag, let IE8 Display in IE7 Standards mode.</p>
 			<pre name="code" class="html">&lt;meta content="IE=EmulateIE7, IE=9" http-equiv="X-UA-Compatible" /&gt;
 			</pre>
-			<p>2. Put the origin image before '#retina' and hidden zoom image after it. Then wrap those three with a 'div'.</p>
+			<p>2. Put the origin image <em>before</em> '#retina'. Then wrap them with a holder DIV. Take note of the 'longdesc' attribute, it offers zoom image's information so must be defined as <em>"zoomImageUrl|zoomImageWidth|zoomImageheight"</em></p>
 				<pre name="code" class="html">&lt;div class="holder"&gt;
-	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" /&gt;
+	&lt;img src="img/psbe.jpg" width="335" height="188" alt="" longdesc="img/psbe.jpg|1200|674" /&gt;
 	&lt;div class="retina" &gt;&lt;/div&gt;
 &lt;/div&gt;
 				</pre>
