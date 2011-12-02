@@ -75,19 +75,13 @@ jQuery(function($) {
 						oImg:{ width:oImg.width(), height:oImg.height()},// origin image size
 						zImg:{width:zImg[1]-0,height:zImg[2]-0}// zoom image size
 						},
-						Imgscale = {
-							x:(sizes.zImg.width - sizes.retina.width)/sizes.oImg.width,
-							y:(sizes.zImg.height - sizes.retina.height)/sizes.oImg.height
-							},
-						maxRetina = 0,
-						minRetina = 0;
+						maxRetina = maxRetina = sizes.retina.width*1.5,
+						minRetina = sizes.retina.width*0.5;
 					
 					
 						
 					// Setting maximum retina size
-					maxRetina = (sizes.zImg.width-(sizes.oImg.width - sizes.retina.width/2)*Imgscale.x)/2;
-						if(sizes.retina.width > maxRetina){maxRetina = sizes.retina.width*1.5};
-					minRetina = sizes.retina.width*0.5;
+					//maxRetina = (sizes.zImg.height-(sizes.oImg.height - sizes.retina.height/2)*Imgscale.y)/2;
 
 					if(controls.sizelimit){
 						if(controls.sizelimit.max){
@@ -116,6 +110,11 @@ jQuery(function($) {
 				
 				// function to Caculate mouseMove Parameters
 					var retinamovePara = function(event){
+							var Imgscale = {
+								x:(sizes.zImg.width - retina.width())/sizes.oImg.width,
+								y:(sizes.zImg.height - retina.height())/sizes.oImg.height
+								};
+							
 							this.holderleft = event.pageX - sizes.holderOffset.left;
 							this.holdertop = event.pageY - sizes.holderOffset.top; 
 							this.css = {
@@ -129,8 +128,7 @@ jQuery(function($) {
 				
 				//begin
 				holder.bind('mousemove touchmove',function(e){
-
-					var movePara = new retinamovePara(e); 
+					var movePara = new retinamovePara(e);
 
 					if(retina.is(':not(:animated):hidden')){
 						/* Fixes a bug where the retina div is not shown */
@@ -169,13 +167,16 @@ jQuery(function($) {
 				if(controls.wheel){	
 					holder.mousewheel(function(objEvent, intDelta){ 
 						
-						var scale = retina.width() * 0.2 * intDelta;
+						var scale = retina.width() * 0.2 * intDelta,
+							BGposition = retina.css('background-position').split(' ');
 						
 						
 						var wheelPara = {
 							left:retina.offset().left - sizes.holderOffset.left - scale/2,
 							top: retina.offset().top - sizes.holderOffset.top - scale/2,
-							retinaZoom : retina.width() + scale
+							retinaZoom : retina.width() + scale,
+							BGleft : parseFloat(BGposition[0]) + scale/2, 
+							BGtop : parseFloat(BGposition[1]) + scale/2
 						}
 						
 						if(objEvent.preventDefault){
@@ -184,8 +185,8 @@ jQuery(function($) {
 						if(wheelPara.retinaZoom >= minRetina && wheelPara.retinaZoom <= maxRetina){
 							retina.width(wheelPara.retinaZoom).height(wheelPara.retinaZoom).css({
 								left : wheelPara.left,
-								top : wheelPara.top
-								//backgroundPosition : (Imgscale.x*(wheelPara.left + scale/2)*(-1))+'px '+(Imgscale.y*(wheelPara.top + scale/2)*(-1))+'px'
+								top : wheelPara.top,
+								backgroundPosition	: wheelPara.BGleft + 'px '+ wheelPara.BGtop +'px'
 							});
 						}
 					});// end of mousewheel
